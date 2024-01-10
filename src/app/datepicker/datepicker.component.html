@@ -1,0 +1,100 @@
+<div class="date-picker-modal" [ngClass]="{'date-time-picker' : formatDate === 'DateTime' && tab === 'Day' }">
+    <div class="picker-header">
+        <div class="picker-head-align">
+            <button class="arrow-left"  type="button" (click)="changes('previous')"></button>
+            <h3 class="current-date" (click)="initYears(); tab = 'Year'">
+                <ng-container *ngIf="tab === 'Day'">{{ selectedMonth + ' ' + selectedYear }}</ng-container>
+                <ng-container *ngIf="tab === 'Month'">{{ selectedYear }}</ng-container>
+                <ng-container *ngIf="tab === 'Year'">{{ selectableYears[0] + ' - ' + selectableYears[selectableYears.length-1] }}</ng-container>
+            </h3>
+            <button class="arrow-right" type="button" (click)="changes('next')"></button>
+        </div>
+    </div>
+    <div class="picker-body">
+        <ng-container *ngIf="tab === 'Day'">
+            <div class="date-picker-body">
+                <div class="day-name">
+                    <p>Sa</p>
+                    <p>Su</p>
+                    <p>Mo</p>
+                    <p>Tu</p>
+                    <p>We</p>
+                    <p>Th</p>
+                    <p>Fr</p>
+                </div>
+                <div class="day-date">
+                    <ng-container *ngFor="let day of selectableDays">
+                        <p [ngClass]="{ 'active' : selectedDay === day.dayOftheMonth, 'day-item': day.show }" (click)="selectDay(day);">
+                            {{ day.show ? day.dayOftheMonth : ' ' }}
+                        </p>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="time-picker-body" *ngIf="formatDate === 'DateTime'">
+                <div class="time-main">
+                    <div class="scrollable-time">
+                        <button class="arrow-top" [ngClass]="{ 'disable' : selectedHour >= 23 }" type="button"
+                            [disabled]="selectedHour >= 23" (click)="changeTime('hour', 'next')">
+                        </button>
+                        <p class="show-time">
+                            {{ selectedHour | number:'2.0' }}
+                        </p>
+                        <button class="arrow-down" [ngClass]="{ 'disable' : selectedHour <= 0 }" type="button"
+                            [disabled]="selectedHour <= 0" (click)="changeTime('hour', 'pre')">
+                        </button>
+                    </div>
+                </div>
+                <p style="width: 1%; font-weight: 700;">:</p>
+                <div class="time-main">
+                    <div class="scrollable-time">
+                        <button class="arrow-top" [ngClass]="{ 'disable' : selectedMinute >= 59 }" type="button"
+                            [disabled]="selectedMinute >= 59" (click)="changeTime('min', 'next')">
+                        </button>
+                        <p class="show-time">
+                            {{ selectedMinute | number:'2.0' }}
+                        </p>
+                        <button class="arrow-down" [ngClass]="{ 'disable' : selectedMinute <= 0 }" type="button"
+                            [disabled]="selectedMinute <= 0" (click)="changeTime('min', 'pre')">
+                        </button>
+                    </div>
+                </div>
+                <p style="width: 1%; font-weight: 700;">:</p>
+                <div class="time-main">
+                    <div class="scrollable-time">
+                        <button class="arrow-top" [ngClass]="{ 'disable' : selectedMinute >= 59 }" type="button"
+                            [disabled]="selectedMinute >= 59" (click)="changeTime('sec', 'next')">
+                        </button>
+                        <p class="show-time">
+                            {{ selectedSecond | number:'2.0' }}
+                        </p>
+                        <button class="arrow-down" [ngClass]="{ 'disable' : selectedMinute <= 0 }" type="button"
+                            [disabled]="selectedMinute <= 0" (click)="changeTime('sec', 'pre')">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tab === 'Month'">
+            <div class="main-month">
+                <ng-container *ngFor="let month of selectableMonth">
+                    <p [ngClass]="{ 'active' : month === selectedMonth }" (click)="selectedMonth = month; tab = 'Day'; getAllDaysInMonth(selectableMonth.indexOf(selectedMonth), selectedYear)">
+                        {{ month }}
+                    </p>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tab === 'Year'">
+            <div class="main-years">
+                <ng-container *ngFor="let year of selectableYears">
+                    <p [ngClass]="{ 'active' : year === selectedYear }" (click)="selectedYear = year; tab = 'Month'">
+                        {{ year }}
+                    </p>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+    <div class="picker-footer">
+        <button type="button" class="picker-button-outlined" (click)="getNowDate()">NOW</button>
+        <button type="button" class="picker-button-filled" (click)="onClose.emit()">OK</button>
+    </div>
+</div>
