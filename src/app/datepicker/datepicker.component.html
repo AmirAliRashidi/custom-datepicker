@@ -61,14 +61,14 @@
                 <p style="width: 1%; font-weight: 700;">:</p>
                 <div class="time-main">
                     <div class="scrollable-time">
-                        <button class="arrow-top" [ngClass]="{ 'disable' : selectedMinute >= 59 }" type="button"
-                            [disabled]="selectedMinute >= 59" (click)="changeTime('sec', 'next')">
+                        <button class="arrow-top" [ngClass]="{ 'disable' : selectedSecond >= 59 }" type="button"
+                            [disabled]="selectedSecond >= 59" (click)="changeTime('sec', 'next')">
                         </button>
                         <p class="show-time">
                             {{ selectedSecond | number:'2.0' }}
                         </p>
-                        <button class="arrow-down" [ngClass]="{ 'disable' : selectedMinute <= 0 }" type="button"
-                            [disabled]="selectedMinute <= 0" (click)="changeTime('sec', 'pre')">
+                        <button class="arrow-down" [ngClass]="{ 'disable' : selectedSecond <= 0 }" type="button"
+                            [disabled]="selectedSecond <= 0" (click)="changeTime('sec', 'pre')">
                         </button>
                     </div>
                 </div>
